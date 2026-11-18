@@ -1,0 +1,197 @@
+/*
+  Lumina UI: token warna, font, dan kelas pendukung.
+  Pakai setelah Tailwind v4:
+    @import "tailwindcss";
+    @import "./lumina-ui/lumina.css";
+  Font: salin HYWenHei-85W.woff2 ke public/fonts/.
+*/
+
+/* HYWenHei-85W, dipangkas ke huruf Latin dan tanda baca agar ringan (15 KB). */
+@font-face {
+  font-family: "HYWenHei 85W";
+  font-style: normal;
+  /* Satu ketebalan (Heavy) dipakai untuk semua bobot agar browser tidak menebalkan buatan. */
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/HYWenHei-85W.woff2") format("woff2");
+}
+
+@theme {
+  --font-display: "HYWenHei 85W", ui-rounded, system-ui, sans-serif;
+  --font-sans: "HYWenHei 85W", ui-rounded, system-ui, sans-serif;
+
+  /* Langit malam Dreamward */
+  --color-night-950: #08113a;
+  --color-night-900: #0d1a4a;
+  --color-night-800: #15296d;
+  --color-night-700: #1f3f9a;
+  --color-sky-500: #4a86de;
+  --color-sky-300: #94c3f2;
+  --color-sky-100: #e3eefb;
+
+  /* Dunia mimpi toska */
+  --color-teal-800: #17565f;
+  --color-teal-600: #2b8f96;
+  --color-teal-400: #5fc9c2;
+  --color-teal-100: #e2f6f1;
+
+  /* Kertas UI */
+  --color-paper: #f4efe5;
+  --color-paper-2: #ece5d8;
+  --color-paper-line: #d8c9a3;
+
+  /* Teks dan aksen */
+  --color-slate: #3b4255;
+  --color-slate-soft: #4a5366;
+  --color-slate-mute: #6b7385;
+  --color-gold: #ffd780;
+  --color-gold-deep: #c9a45a;
+  --color-gold-soft: #fff1c4;
+
+  /* Status jawaban salah */
+  --color-ruby: #c4574f;
+  --color-ruby-soft: #fbe4df;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper font-sans text-slate antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-weight: 800;
+    text-wrap: balance;
+  }
+  section[id] {
+    scroll-margin-top: 4.5rem;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  /* Bingkai perangko bergerigi, seperti bingkai ilustrasi event. */
+  .stamp {
+    --c: var(--color-paper);
+    padding: 14px;
+    background:
+      radial-gradient(circle, var(--c) 7px, transparent 7.5px) top left / 18px 16px repeat-x,
+      radial-gradient(circle, var(--c) 7px, transparent 7.5px) bottom left / 18px 16px repeat-x,
+      radial-gradient(circle, var(--c) 7px, transparent 7.5px) top left / 16px 18px repeat-y,
+      radial-gradient(circle, var(--c) 7px, transparent 7.5px) top right / 16px 18px repeat-y,
+      linear-gradient(var(--c), var(--c)) center / calc(100% - 16px) calc(100% - 16px) no-repeat;
+  }
+  .stamp-sm {
+    --c: var(--color-paper);
+    padding: 9px;
+    background:
+      radial-gradient(circle, var(--c) 4.5px, transparent 5px) top left / 12px 10px repeat-x,
+      radial-gradient(circle, var(--c) 4.5px, transparent 5px) bottom left / 12px 10px repeat-x,
+      radial-gradient(circle, var(--c) 4.5px, transparent 5px) top left / 10px 12px repeat-y,
+      radial-gradient(circle, var(--c) 4.5px, transparent 5px) top right / 10px 12px repeat-y,
+      linear-gradient(var(--c), var(--c)) center / calc(100% - 10px) calc(100% - 10px) no-repeat;
+  }
+  .glow-text {
+    text-shadow:
+      0 0 24px rgba(160, 200, 255, 0.55),
+      0 2px 0 rgba(8, 17, 58, 0.35);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .anim-drift {
+    animation: drift 40s ease-in-out infinite alternate;
+  }
+  .anim-twinkle {
+    animation: none;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .anim-spin {
+    animation: spin 30s linear infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .anim-pulse-ring {
+    animation: pulse-ring 2.4s ease-out infinite;
+  }
+  .anim-marquee {
+    animation: marquee 50s linear infinite;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-30px);
+  }
+  to {
+    transform: translateX(30px);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .anim-drift,
+  .anim-twinkle,
+  .anim-spin,
+  .anim-pulse-ring,
+  .anim-marquee {
+    animation: none;
+  }
+}
